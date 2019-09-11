@@ -3,6 +3,7 @@ import Link from "next/link";
 import ItemImage from "../components/ItemImage";
 import ItemForm from "../components/ItemForm";
 import { currency } from "components/Currency";
+import slugify from "slugify";
 
 class Items extends React.Component {
   render() {
@@ -37,7 +38,7 @@ const Item = props => {
         )}
         <Link
           href={{
-            pathname: `/i/${item.id}-${item.title}`
+            pathname: `/i/${item.id}-${slugify(item.title)}`
           }}
         >
           <a className={"itemContent"}>

@@ -23,7 +23,6 @@ export function actionGetGroup(groupId) {
     if (getState().group.groupId !== parseInt(groupId, 10)) {
       dispatch(clearGroupItems());
       return getGroup(groupId).then(group => {
-        console.log(group);
         dispatch(setGroup(group));
       });
     }

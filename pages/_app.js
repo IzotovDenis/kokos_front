@@ -34,7 +34,6 @@ class MyApp extends App {
       });
     }
     if (Component.getInitialProps) {
-      console.log(Component.getInitialProps);
       await Component.getInitialProps(ctx);
     }
     return { error: error };

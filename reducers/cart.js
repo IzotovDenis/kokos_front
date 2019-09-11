@@ -11,8 +11,6 @@ const initialState = {
   isSuccess: false
 };
 
-console.log(initialState);
-
 export default function catalog(state = initialState, action) {
   let nextOrderList = {};
   switch (action.type) {

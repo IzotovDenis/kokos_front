@@ -13,7 +13,6 @@ function initialLoad(reduxStore, query) {
   let promise = new Promise((resolve, reject) => {
     Promise.all([API.groups.show(query.id, undefined, query.token)]).then(
       value => {
-        console.log(value[0]);
         reduxStore.dispatch(setGroup(value[0]));
         resolve(true);
       }
