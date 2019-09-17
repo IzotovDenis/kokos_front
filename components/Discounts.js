@@ -20,7 +20,7 @@ export const Discount = props => {
   return (
     <>
       <Link
-        href={`/discounts?id=${discount.id}`}
+        href={`/discount?id=${discount.id}`}
         as={`/discounts/${discount.id}`}
       >
         <a className={"container"}>
