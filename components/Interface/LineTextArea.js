@@ -68,7 +68,7 @@ const Styles = () => {
         line-height: 1em;
         padding: 2px 5px;
         user-select: none;
-        font-weight: 300;
+        font-weight: 400;
         z-index: 10;
       }
 

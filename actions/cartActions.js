@@ -93,11 +93,11 @@ function fetching() {
   };
 }
 
-export function actionSendOrder() {
+export function actionSendOrder(info) {
   return function(dispatch, getState) {
     dispatch(fetching());
     const cart = getState().cart;
-    const order = { items: cart.orderList, info: cart.info };
+    const order = { items: cart.orderList, info: info };
     return sendOrder(order).then(response => {
       if (response.success) {
         dispatch(sendSuccess());

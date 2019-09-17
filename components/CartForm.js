@@ -51,7 +51,7 @@ const CartForm = props => {
     const errors = validate(info, constraints);
     if (errors) setErrors(errors || {});
     else {
-      dispatch(actionSendOrder());
+      dispatch(actionSendOrder(info));
     }
   };
   useEffect(() => {
@@ -111,6 +111,7 @@ const CartForm = props => {
         disabled={fetching}
         style={{
           background: "#5a2b08",
+          fontFamily: "Harmonia",
           color: "#fff",
           padding: 10,
           textAlign: "center",

@@ -5,6 +5,7 @@ const Styles = props => {
     <style jsx>{`
       .formControl {
         display: block;
+        font-family: "Harmonia";
         width: 100%;
         padding: 0.438em 0.875em;
         font-size: 1em;
