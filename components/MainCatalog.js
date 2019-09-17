@@ -65,6 +65,7 @@ const MainCatalog = props => {
 
 const Item = withRouter(props => {
   const { item, parent } = props;
+  const isGroupRoute = props.router.pathname === "/group";
   const group_id = props.router.query.id;
   return (
     <>
@@ -73,7 +74,9 @@ const Item = withRouter(props => {
           className={`item 
           ${parent ? "parent" : ""}
           ${
-            group_id && parseInt(item.id) === parseInt(group_id) ? "active" : ""
+            isGroupRoute && group_id && parseInt(item.id) === parseInt(group_id)
+              ? "active"
+              : ""
           }`}
         >
           {item.title}
@@ -115,16 +118,24 @@ const Item = withRouter(props => {
 const DiscountItem = () => {
   return (
     <>
-      <div className={"item"}>
-        <div className={"itemIcon"}>
-          <DiscountIcon />
-        </div>
-        <div className={"title"}>Акции</div>
-      </div>
+      <Link href={"/discounts"}>
+        <a className={"item"}>
+          <div className={"itemIcon"}>
+            <DiscountIcon />
+          </div>
+          <div className={"title"}>Акции</div>
+        </a>
+      </Link>
       <style jsx>{`
         .item {
           display: flex;
           padding: 0px 10px;
+          text-decoration: none;
+          background: #fa866940;
+          border: 1px dashed transparent;
+        }
+        .item:hover {
+          border: 1px dashed #fa8669;
         }
         .itemIcon {
           height: 32px;
@@ -139,6 +150,8 @@ const DiscountItem = () => {
           font-size: 14px;
           text-transform: uppercase;
           margin-left: 10px;
+          color: #222;
+          text-decoration: none;
         }
       `}</style>
     </>

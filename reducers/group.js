@@ -6,6 +6,7 @@ const initialState = {
   items: [],
   totalItems: 0,
   groupId: undefined,
+  isLoad: false,
   group: {}
 };
 
@@ -18,11 +19,13 @@ export default function group(state = initialState, action) {
         group: action.payload.group,
         groupId: action.payload.group.id,
         pageLoaded: action.payload.pageLoaded,
-        totalItems: action.payload.group.items_count
+        totalItems: action.payload.group.items_count,
+        isLoad: true
       };
     case actionTypes.CLEAR_GROUP_ITEMS:
       return {
-        ...initialState
+        ...initialState,
+        isLoad: false
       };
     default:
       return state;

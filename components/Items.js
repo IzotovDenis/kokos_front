@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import ItemImage from "../components/ItemImage";
 import ItemForm from "../components/ItemForm";
-import { currency } from "components/Currency";
+import { currency } from "modules/helpers";
 import slugify from "slugify";
 
 class Items extends React.Component {
@@ -50,7 +50,7 @@ const Item = props => {
           </a>
         </Link>
         <div className={"footer"}>
-          <div className={"price"}>{currency(item.price)}</div>
+          <Price item={item} />
           <div className={"orderForm"}>
             <ItemForm itemId={item.id} item={item} />
           </div>
@@ -134,18 +134,6 @@ const Item = props => {
           color: #666;
         }
 
-        .price {
-          font-family: "Proxima Nova", sans-serif;
-          font-weight: 600;
-          text-align: center;
-          padding-bottom: 5px;
-          color: #000;
-          flex: 1;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-
         .footer {
           display: flex;
           padding: 0px 5px 5px 5px;
@@ -177,6 +165,67 @@ const Item = props => {
       `}</style>
     </>
   );
+};
+
+const Price = props => {
+  const { item } = props;
+  let result;
+  if (item.discount_price > 0) {
+    return (
+      <>
+        <div className={"price_old"}>{currency(item.price)}</div>
+        <div className={"price"}>{currency(item.discount_price)}</div>
+        <style jsx>{`
+          .price_old {
+            font-size: 13px;
+            position: relative;
+            font-weight: 400;
+            color: #888;
+          }
+          .price_old::before {
+            content: " ";
+            height: 1px;
+            top: 50%;
+            bottom: 0px;
+
+            width: 100%;
+            background: #888;
+            position: absolute;
+          }
+          .price {
+            font-family: "Proxima Nova", sans-serif;
+            font-weight: 600;
+            text-align: center;
+            padding-bottom: 5px;
+            color: #000;
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+        `}</style>
+      </>
+    );
+  } else {
+    return (
+      <>
+        <div className={"price"}>{currency(item.price)}</div>{" "}
+        <style jsx>{`
+          .price {
+            font-family: "Proxima Nova", sans-serif;
+            font-weight: 600;
+            text-align: center;
+            padding-bottom: 5px;
+            color: #000;
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+        `}</style>
+      </>
+    );
+  }
 };
 
 export default Items;

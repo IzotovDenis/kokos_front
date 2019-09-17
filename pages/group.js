@@ -8,6 +8,7 @@ import { bindActionCreators } from "redux";
 import Items from "components/Items";
 import BreadCrumbs from "components/BreadCrumbs";
 import Head from "next/head";
+import Spinner from "../components/Spinner";
 
 function initialLoad(reduxStore, query) {
   let promise = new Promise((resolve, reject) => {
@@ -28,6 +29,13 @@ class Group extends React.Component {
       await initialLoad(reduxStore, query);
     }
     return { token: query };
+  }
+  componentDidMount() {
+    this.props.groupActions.clearGroupItems();
+    this.props.groupActions.actionGetGroup(
+      this.props.router.query.id,
+      this.props.router.query
+    );
   }
   componentDidUpdate(prevProps) {
     const { dispatch } = this.props;
@@ -55,7 +63,7 @@ class Group extends React.Component {
     return `${this.getTitle()} по низкой цене с доставкой по России, оригинальный товар, большой выбор, удобный способ оплаты`;
   }
   render() {
-    const { items } = this.props;
+    const { items, isLoad } = this.props;
     return (
       <>
         <Head>
@@ -71,9 +79,14 @@ class Group extends React.Component {
             <MainCatalog />
           </div>
           <div className={"gcontent"}>
-            <BreadCrumbs type={"groups"} id={this.props.group.id} />
-            <h1 className={"groupLabel"}>{this.getTitle()}</h1>
-            <Items items={items} />
+            {!isLoad && <Spinner />}
+            {isLoad && (
+              <>
+                <BreadCrumbs type={"groups"} id={this.props.group.id} />
+                <h1 className={"groupLabel"}>{this.getTitle()}</h1>
+                <Items items={items} />
+              </>
+            )}
           </div>
         </div>
       </>
@@ -90,7 +103,8 @@ export default withRouter(
         groupId: state.group.groupId,
         totalItems: state.group.totalItems,
         pageLoaded: state.group.pageLoaded,
-        totalPages: state.group.totalPages
+        totalPages: state.group.totalPages,
+        isLoad: state.group.isLoad
       };
     },
     dispatch => {

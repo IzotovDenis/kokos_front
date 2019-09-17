@@ -3,7 +3,7 @@ import API from "modules/API";
 import { connect } from "react-redux";
 import { actionGetItem, actionSetItem } from "../actions/itemActions";
 import ItemImage from "components/ItemImage";
-import { currency } from "components/Currency";
+import { currency } from "modules/helpers";
 import ItemForm from "components/ItemForm";
 import MainCatalog from "components/MainCatalog";
 import BreadCrumbs from "components/BreadCrumbs";
@@ -63,7 +63,9 @@ class Item extends React.Component {
                 <div className={"content"}>
                   <div className={"title"}>{item.title}</div>
                   <div className={"subtitle"}>{item.subtitle}</div>
-                  <div className={"price"}>{currency(item.price)}</div>
+                  <div className={"price"}>
+                    <Price item={item} />
+                  </div>
                   <div className={"formContainer"}>
                     <ItemForm item={item} />
                   </div>
@@ -124,9 +126,6 @@ class Item extends React.Component {
           }
           .price {
             padding: 10px 0px;
-            font-weight: 600;
-            font-size: 1.3rem;
-            text-align: left;
           }
           .icon {
             width: 1.5rem;
@@ -136,7 +135,8 @@ class Item extends React.Component {
           }
           .title {
             font-size: 1.3rem;
-            font-weight: 500;
+            font-family: "Proxima Nova", sans-serif;
+            font-weight: 600;
           }
           .formContainer {
             width: 200px;
@@ -165,6 +165,62 @@ class Item extends React.Component {
     );
   }
 }
+
+const Price = props => {
+  const { item } = props;
+  let result;
+  if (item.discount_price > 0) {
+    return (
+      <>
+        <span className={"price_old"}>{currency(item.price)}</span>
+        <div className={"price"}>{currency(item.discount_price)}</div>
+        <style jsx>{`
+          .price_old {
+            font-size: 13px;
+            position: relative;
+            font-weight: 400;
+            color: #888;
+          }
+          .price_old::before {
+            content: " ";
+            height: 1px;
+            top: 50%;
+            bottom: 0px;
+
+            width: 100%;
+            background: #888;
+            position: absolute;
+          }
+          .price {
+            font-family: "Proxima Nova", sans-serif;
+            font-weight: 600;
+            font-size: 1.3rem;
+            text-align: left;
+          }
+        `}</style>
+      </>
+    );
+  } else {
+    return (
+      <>
+        <div className={"price"}>{currency(item.price)}</div>{" "}
+        <style jsx>{`
+          .price {
+            font-family: "Proxima Nova", sans-serif;
+            font-weight: 600;
+            text-align: center;
+            padding-bottom: 5px;
+            color: #000;
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+        `}</style>
+      </>
+    );
+  }
+};
 
 const mapDispatchToProps = {
   actionGetItem

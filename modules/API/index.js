@@ -1,11 +1,13 @@
-import groups from './groups'
-import orders from './orders'
-import items from './items'
+import groups from "./groups";
+import orders from "./orders";
+import items from "./items";
+import discounts from "./discounts";
 
 const API = {
   groups,
   orders,
-  items
-}
+  items,
+  discounts
+};
 
-export default API
+export default API;

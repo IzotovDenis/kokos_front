@@ -1,9 +1,11 @@
 import React from "react";
 import Link from "next/link";
 import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import { MenuIcon } from "./Icons";
 import * as mobileMenuActions from "../actions/mobileMenuActions.js";
+import { Discount } from "../components/Discounts";
+import { DiscountIcon } from "components/Icons";
 
 const Header = () => {
   return (
@@ -31,9 +33,16 @@ const Header = () => {
         </div>
         <div className={"rightSide"}>
           <SubHead />
+          <MainDiscount />
         </div>
       </div>
+      <div className={"onMobile"}>
+        <MainDiscount />
+      </div>
       <style jsx>{`
+        .onMobile {
+          display: none;
+        }
         .header {
           display: flex;
           flex-direction: row;
@@ -53,6 +62,9 @@ const Header = () => {
         }
         .rightSide {
           flex: 1;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
         }
         @media (max-width: 991.98px) {
           .header {
@@ -69,6 +81,82 @@ const Header = () => {
           }
           .rightSide {
             display: none;
+          }
+          .onMobile {
+            display: block;
+          }
+        }
+      `}</style>
+    </>
+  );
+};
+
+const MainDiscount = props => {
+  const discount = useSelector(state => state.discounts.global);
+  if (discount.id) {
+    return (
+      <>
+        <div className={"container"}>
+          <div className={"wrapper"}>
+            <HeadDiscount discount={discount} />
+          </div>
+        </div>
+        <style jsx>{`
+          .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+          .wrapper {
+          }
+        `}</style>
+      </>
+    );
+  } else {
+    return null;
+  }
+};
+
+export const HeadDiscount = props => {
+  const { discount } = props;
+  return (
+    <>
+      <div className={"container"}>
+        <div className={"icon"}>
+          <DiscountIcon />
+        </div>
+        <div className={"title"}>{discount.title}</div>
+        <div className={"icon"}>
+          <DiscountIcon />
+        </div>
+      </div>
+      <style jsx>{`
+        .container {
+          border-radius: 10px;
+          margin: 10px;
+          display: flex;
+          background: #fa866930;
+        }
+        .icon {
+          width: 30px;
+          padding: 5px;
+          border-top-left-radius: 5px;
+          border-bottom-left-radius: 5px;
+        }
+        .title {
+          flex: 1;
+          display: flex;
+          font-size: 14px;
+          font-weight: 600;
+          align-items: center;
+          padding: 5px 10px;
+          border-left: 0px;
+          border-top-right-radius: 5px;
+          border-bottom-right-radius: 5px;
+        }
+        @media (max-width: 991.98px) {
+          .container {
+            margin: 0px;
           }
         }
       `}</style>

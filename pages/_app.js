@@ -6,15 +6,17 @@ import Header from "components/Header";
 import Head from "next/head";
 import ThumbCart from "components/ThumbCart";
 import { setCatalog } from "../actions/catalogActions";
+import { setDiscounts } from "../actions/discountActions";
 import API from "modules/API";
 import MobileMenu from "components/MobileMenu";
 import Footer from "components/Footer";
 
 function initialLoad(ctx) {
   let promise = new Promise((resolve, reject) => {
-    Promise.all([API.groups.index()])
+    Promise.all([API.groups.index(), API.discounts.index()])
       .then(value => {
         ctx.reduxStore.dispatch(setCatalog(value[0]));
+        ctx.reduxStore.dispatch(setDiscounts(value[1]));
         resolve(true);
       })
       .catch(e => {

@@ -42,11 +42,16 @@ const userActionTypes = {
   UPDATE_USER_FIELD: "UPDATE_USER_FIELD"
 };
 
+const discountsActionTypes = {
+  SET_DISCOUNTS: "SET_DISCOUNTS"
+};
+
 export const actionTypes = {
   ...cartActionTypes,
   ...groupActionTypes,
   ...mobileMenuActionTypes,
   ...cartActionTypes,
   ...catalogActionTypes,
-  ...itemsActionTypes
+  ...itemsActionTypes,
+  ...discountsActionTypes
 };

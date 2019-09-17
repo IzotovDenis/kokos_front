@@ -6,6 +6,7 @@ import group from "./group";
 import posts from "./posts";
 import mobileMenu from "./mobileMenu";
 import item from "./item";
+import discounts from "./discounts";
 
 export default combineReducers({
   catalog,
@@ -14,5 +15,6 @@ export default combineReducers({
   group,
   posts,
   mobileMenu,
-  item
+  item,
+  discounts
 });

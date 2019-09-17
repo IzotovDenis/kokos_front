@@ -34,6 +34,10 @@ app.prepare().then(() => {
     return app.render(req, res, "/action", { id: req.params.id });
   });
 
+  server.get("/discounts/:id", (req, res) => {
+    return app.render(req, res, "/discount", { id: req.params.id });
+  });
+
   server.get("/brands/:id", (req, res) => {
     return app.render(req, res, "/brand", {
       ...req.query,

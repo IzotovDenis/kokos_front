@@ -2,7 +2,7 @@ import React from "react";
 import { connect, useSelector, useDispatch } from "react-redux";
 import ItemImage from "components/ItemImage";
 import ItemForm from "components/ItemForm";
-import { currency } from "components/Currency";
+import { currency } from "modules/helpers";
 import { actionToggleItem } from "actions/cartActions";
 import { PlusIcon, MinusIcon } from "../components/Icons";
 
@@ -16,6 +16,7 @@ const CartItems = props => {
 const CartItem = props => {
   const { item } = props;
   const ordered = useSelector(state => state.cart.orderList[item.id] || 0);
+  const price = item.discount_price > 0 ? item.discount_price : item.price;
   return (
     <>
       <div className={"item"}>
@@ -29,7 +30,7 @@ const CartItem = props => {
               <Form value={ordered} item={item} />
             </div>
             <div className={"priceContainer"}>
-              <span>{currency(item.price * ordered)}</span>
+              <span>{currency(price * ordered)}</span>
             </div>
           </div>
         </div>
@@ -74,7 +75,7 @@ const CartItem = props => {
         }
 
         .priceContainer {
-          width: 100px;
+          flex: 1;
           display: flex;
           align-items: center;
           padding-right: 10px;

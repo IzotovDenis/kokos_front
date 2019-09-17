@@ -4,6 +4,7 @@ import Head from "next/head";
 import API from "modules/API";
 import Items from "components/Items";
 import MainCatalog from "../components/MainCatalog";
+import Discounts from "../components/Discounts";
 
 class Index extends React.Component {
   static async getInitialProps({ reduxStore, req }) {
@@ -30,6 +31,7 @@ class Index extends React.Component {
             <MainCatalog />
           </div>
           <div className={"gcontent"}>
+            <Discounts />
             <h1 className={"hLabel"}>
               <span>Популярные товары</span>
             </h1>

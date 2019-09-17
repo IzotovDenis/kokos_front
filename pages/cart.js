@@ -1,12 +1,14 @@
 import { connect } from "react-redux";
 import CartItems from "components/CartItems";
 import CartForm from "../components/CartForm";
+import DeliveryMsg from "../components/DeliveryMsg";
 
 class Cart extends React.Component {
   render() {
     return (
       <>
         <div className={"cart"}>
+          <DeliveryMsg />
           <h3>Ваш заказ</h3>
           <CartItems />
           <h3>Получатель</h3>
