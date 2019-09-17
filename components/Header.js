@@ -93,7 +93,7 @@ const Header = () => {
 
 const MainDiscount = props => {
   const discount = useSelector(state => state.discounts.global);
-  if (discount.id) {
+  if (discount && discount.id) {
     return (
       <>
         <div className={"container"}>

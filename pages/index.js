@@ -26,6 +26,17 @@ class Index extends React.Component {
     const { items } = this.state;
     return (
       <>
+        <Head>
+          <title>Корейская косметика в интернет магазине Kokos.top</title>
+          <meta
+            content={`Корейская косметика в интернет магазине Kokos.top`}
+            name="title"
+          />
+          <meta
+            name="description"
+            content={`Красота и здоровье для Вашей кожи. Корейская косметика известных брендов по выгодным ценам. Отправка по всей России. Регулярные акции и скидки.`}
+          />
+        </Head>
         <div style={{ display: "flex", flexDirection: "row" }}>
           <div className={"gcatalog"}>
             <MainCatalog />

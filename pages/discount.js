@@ -4,19 +4,63 @@ import { withRouter } from "next/router";
 import API from "../modules/API";
 import Items from "../components/Items";
 import Spinner from "../components/Spinner";
+import Head from "next/head";
+
+// function initialLoad(reduxStore, query) {
+//   let promise = new Promise((resolve, reject) => {
+//     Promise.all([API.groups.show(query.id, undefined, query.token)]).then(
+//       value => {
+//         reduxStore.dispatch(setGroup(value[0]));
+//         resolve(true);
+//       }
+//     );
+//   });
+//   return promise;
+// }
 
 class Discount extends React.Component {
-  state = { discount: { items: [], text: "" }, isLoad: false };
+  static async getInitialProps({ reduxStore, req, query }) {
+    const isServer = !!req;
+    if (isServer) {
+      let response = await API.discounts.show(query.id);
+      return { discount: response.discount };
+    }
+    return {};
+  }
+  state = {
+    discount: this.props.discount,
+    isLoad: this.props.discount ? true : false
+  };
   componentDidMount() {
     const id = this.props.router.query.id;
-    API.discounts.show(id).then(response => {
-      this.setState({ discount: response.discount, isLoad: true });
-    });
+    if (!this.props.discount) {
+      API.discounts.show(id).then(response => {
+        this.setState({ discount: response.discount, isLoad: true });
+      });
+    }
+  }
+  componentDidUpdate() {
+    const id = this.props.router.query.id;
+    if (!this.props.discount && this.state.discount.id !== parseInt(id)) {
+      API.discounts.show(id).then(response => {
+        this.setState({ discount: response.discount, isLoad: true });
+      });
+    }
   }
   render() {
     const { discount, isLoad } = this.state;
     return (
       <>
+        {isLoad && (
+          <Head>
+            <title>{discount.title} в интернет магазине Kokos.top</title>
+            <meta
+              content={`${discount.title} в интернет магазине Kokos.top`}
+              name="title"
+            />
+            <meta name="description" content={`${discount.text}`} />
+          </Head>
+        )}
         <div style={{ display: "flex", flexDirection: "row" }}>
           <div className={"gcatalog"}>
             <MainCatalog />

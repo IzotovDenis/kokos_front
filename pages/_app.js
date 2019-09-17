@@ -30,15 +30,16 @@ class MyApp extends App {
   static async getInitialProps({ reduxStore, Component, ctx }) {
     const isServer = !!ctx.req;
     let error = false;
+    let pageProps = {};
     if (isServer) {
       await initialLoad(ctx).catch(e => {
         error = true;
       });
     }
     if (Component.getInitialProps) {
-      await Component.getInitialProps(ctx);
+      pageProps = await Component.getInitialProps(ctx);
     }
-    return { error: error };
+    return { error: error, pageProps: pageProps };
   }
   render() {
     const { Component, pageProps, reduxStore } = this.props;
