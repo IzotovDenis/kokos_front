@@ -4,10 +4,15 @@ import { actionHide } from "../actions/mobileMenuActions";
 import MainCatalog from "components/MainCatalog";
 // import { withRouter } from "react-router-dom";
 import { SubHead } from "components/Header";
+import { withRouter } from "next/router";
 
 const MobileMenu = props => {
   const isShown = useSelector(state => state.mobileMenu.isShown);
   const dispatch = useDispatch();
+  const hide = () => {
+    dispatch(actionHide());
+  };
+  useEffect(() => hide(), [props.router]);
   return (
     <>
       <div
@@ -125,4 +130,4 @@ const Container = props => {
 //   )(MobileMenu)
 // );
 
-export default MobileMenu;
+export default withRouter(MobileMenu);
