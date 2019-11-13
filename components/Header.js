@@ -2,10 +2,11 @@ import React from "react";
 import Link from "next/link";
 import { bindActionCreators } from "redux";
 import { connect, useSelector } from "react-redux";
-import { MenuIcon } from "./Icons";
+import { MenuIcon, SearchIcon } from "./Icons";
 import * as mobileMenuActions from "../actions/mobileMenuActions.js";
 import { Discount } from "../components/Discounts";
 import { DiscountIcon } from "components/Icons";
+import SearchForm from "components/SearchForm";
 
 const Header = () => {
   return (
@@ -31,6 +32,7 @@ const Header = () => {
             </a>
           </Link>
         </div>
+        <SearchContainer />
         <div className={"rightSide"}>
           <SubHead />
           <MainDiscount />
@@ -74,7 +76,6 @@ const Header = () => {
           }
           .logoContainer {
             flex: 1;
-            margin-right: 30px;
           }
           .logoImage {
             width: 70px;
@@ -200,7 +201,7 @@ const Hamburger = connect(
         @media (max-width: 991.98px) {
           .hamburgerContainer {
             display: flex;
-            width: 30px;
+            width: 50px;
             height: 50px;
             justify-content: center;
             align-items: center;
@@ -212,30 +213,80 @@ const Hamburger = connect(
   );
 });
 
+const SearchContainer = () => {
+  return (
+    <>
+      <Link href="/search">
+        <a className={"SearchContainer"}>
+          <div className={"SearchWrapper"}>
+            <SearchIcon />
+          </div>
+          <div className={"SearchText"}>поиск</div>
+        </a>
+      </Link>
+      <style jsx>{`
+        .SearchContainer {
+          display: none;
+          position: relative;
+        }
+        .SearchText {
+          position: absolute;
+          bottom: 1px;
+          font-size: 12px;
+          color: #582806;
+          justify-content: center;
+          align-items: center;
+        }
+        .SearchWrapper {
+          height: 26px;
+          width: 26px;
+          fill: #582806;
+        }
+        .SearchWrapper svg {
+          fill: #582806;
+        }
+        @media (max-width: 991.98px) {
+          .SearchContainer {
+            display: flex;
+            width: 50px;
+            height: 50px;
+            justify-content: center;
+            align-items: center;
+            fill: #fff;
+          }
+        }
+      `}</style>
+    </>
+  );
+};
+
 export const SubHead = props => {
   return (
     <>
       <div className={"container"}>
         <div className={"wrapper"}>
           <div className={"labelCatalog"}>ИНФОРМАЦИЯ</div>
+          <div className={"desktopOnly"}>
+            <SearchForm />
+          </div>
           <Link href={"/"}>
             <a className={"item"}>
-              <div className={"title"}>Главная</div>
+              <span className={"title"}>Главная</span>
             </a>
           </Link>
           <Link href={"/p?id=about"}>
             <a className={"item"}>
-              <div className={"title"}>О нас</div>
+              <span className={"title"}>О нас</span>
             </a>
           </Link>
           <Link href={"/p?id=payment"}>
             <a className={"item"}>
-              <div className={"title"}>Оплата и доставка</div>
+              <span className={"title"}>Оплата и доставка</span>
             </a>
           </Link>
           <Link href={"/p?id=stores"}>
             <a className={"item itemStore"}>
-              <div className={"title"}>Магазины</div>
+              <span className={"title"}>Магазины</span>
             </a>
           </Link>
         </div>
@@ -249,19 +300,18 @@ export const SubHead = props => {
 
         .wrapper {
           max-width: 1300px;
-          margin: 0 auto;
           display: -ms-flexbox;
           display: flex;
           flex-direction: row;
-          justify-content: center;
         }
 
         .item {
           margin: 0px 20px;
           text-align: center;
           display: flex;
-          font-weight: 700;
+          font-weight: 600;
           justify-content: center;
+          align-items: center;
           text-decoration: none;
           color: #582806;
           fill: #582806;
