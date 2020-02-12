@@ -1,18 +1,19 @@
-import { connect, useSelector } from "react-redux";
-import CartItems from "components/CartItems";
-import CartForm from "../components/CartForm";
-import DeliveryMsg from "../components/DeliveryMsg";
-import Link from "next/link";
+import { connect, useSelector } from 'react-redux';
+import CartItems from 'components/CartItems';
+import CartForm from '../components/CartForm';
+import DeliveryMsg from '../components/DeliveryMsg';
+import Link from 'next/link';
+import { currency } from 'modules/helpers';
 
 const Cart = props => {
   const cart = useSelector(state => state.cart);
   if (cart.items.length === 0) {
     return (
       <>
-        <div className={"cart"}>
+        <div className={'cart'}>
           <DeliveryMsg />
           <h3>В корзине пусто :(</h3>
-          <Link href={"/"}>
+          <Link href={'/'}>
             <a>Вернуться в магазин</a>
           </Link>
         </div>
@@ -33,10 +34,13 @@ const Cart = props => {
   }
   return (
     <>
-      <div className={"cart"}>
+      <div className={'cart'}>
         <DeliveryMsg />
         <h3>Ваш заказ</h3>
         <CartItems />
+        <p style={{ textAlign: 'right', fontWeight: 500, padding: '0px 10px' }}>
+          Сумма заказа {currency(cart.amount)}
+        </p>
         <h3>Получатель</h3>
         <CartForm />
       </div>
