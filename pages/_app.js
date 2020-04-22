@@ -1,26 +1,27 @@
-import App from "next/app";
-import React from "react";
-import withReduxStore from "../lib/with-redux-store";
-import { Provider } from "react-redux";
-import Header from "components/Header";
-import Head from "next/head";
-import ThumbCart from "components/ThumbCart";
-import { setCatalog } from "../actions/catalogActions";
-import { setDiscounts } from "../actions/discountActions";
-import API from "modules/API";
-import MobileMenu from "components/MobileMenu";
-import Footer from "components/Footer";
+import App from 'next/app';
+import React from 'react';
+import withReduxStore from '../lib/with-redux-store';
+import { Provider } from 'react-redux';
+import Header from 'components/Header';
+import Head from 'next/head';
+import ThumbCart from 'components/ThumbCart';
+import { setCatalog } from '../actions/catalogActions';
+import { setDiscounts } from '../actions/discountActions';
+import API from 'modules/API';
+import MobileMenu from 'components/MobileMenu';
+import Footer from 'components/Footer';
+import Tracker from '../components/Tracker';
 
 function initialLoad(ctx) {
   let promise = new Promise((resolve, reject) => {
     Promise.all([API.groups.index(), API.discounts.index()])
-      .then(value => {
+      .then((value) => {
         ctx.reduxStore.dispatch(setCatalog(value[0]));
         ctx.reduxStore.dispatch(setDiscounts(value[1]));
         resolve(true);
       })
-      .catch(e => {
-        reject("error");
+      .catch((e) => {
+        reject('error');
       });
   });
   return promise;
@@ -32,7 +33,7 @@ class MyApp extends App {
     let error = false;
     let pageProps = {};
     if (isServer) {
-      await initialLoad(ctx).catch(e => {
+      await initialLoad(ctx).catch((e) => {
         error = true;
       });
     }
@@ -48,9 +49,10 @@ class MyApp extends App {
         <Provider store={reduxStore}>
           <React.Fragment>
             <HeadPage />
+            <Tracker />
             <MobileMenu />
             <Header />
-            <div className={"App"}>
+            <div className={'App'}>
               <Component {...pageProps} />
             </div>
             <ThumbCart />
@@ -87,7 +89,7 @@ const Styles = () => {
   );
 };
 
-const HeadPage = props => {
+const HeadPage = (props) => {
   return (
     <Head>
       <link
