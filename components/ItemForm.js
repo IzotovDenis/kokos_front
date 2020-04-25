@@ -1,12 +1,13 @@
-import React from "react";
-import { CartIcon } from "./Icons";
-import { connect, useDispatch, useSelector } from "react-redux";
-import { bindActionCreators } from "redux";
-import { actionToggleItem } from "../actions/cartActions";
+import React from 'react';
+import { CartIcon } from './Icons';
+import { connect, useDispatch, useSelector } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { actionToggleItem } from '../actions/cartActions';
+import ReactGA from 'react-ga';
 
-const ItemForm = props => {
+const ItemForm = (props) => {
   const { item } = props;
-  const ordered = useSelector(state => state.cart.orderList[item.id] || 0);
+  const ordered = useSelector((state) => state.cart.orderList[item.id] || 0);
   const dispatch = useDispatch();
   const getTitle = () => {
     if (ordered > 0) {
@@ -14,17 +15,21 @@ const ItemForm = props => {
     }
     return `в корзину`;
   };
+  const addItem = (id, ordered) => {
+    dispatch(actionToggleItem(id, ordered));
+    ReactGA.event({
+      category: 'submint',
+      action: 'cart_add',
+    });
+  };
   return (
     <>
-      <div
-        className={"order"}
-        onClick={() => dispatch(actionToggleItem(item.id, ordered + 1))}
-      >
-        <div className={"icon"}>
+      <div className={'order'} onClick={() => addItem(item.id, ordered + 1)}>
+        <div className={'icon'}>
           <CartIcon />
         </div>
 
-        <div className={"title"}>{getTitle()}</div>
+        <div className={'title'}>{getTitle()}</div>
       </div>
       <style jsx>{`
         .order {
